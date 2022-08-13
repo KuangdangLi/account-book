@@ -1,14 +1,14 @@
 <template lang="">
     <nav>
-        <router-link to="/money" class="item" >
+        <router-link to="/money" class="item" active-class="selected">
             <Icon name="money"/>
             Money
         </router-link>
-        <router-link to="/label" class="item" >
+        <router-link to="/label" class="item" active-class="selected">
             <Icon name="labels"/>
            Label
         </router-link>
-        <router-link to="/statistics" class="item" >
+        <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="chart"/>
             Statistics
         </router-link>
