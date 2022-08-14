@@ -1,11 +1,32 @@
 <template>
     <div>
         <ul class="types">
-            <li class="selected">支出</li>
-            <li>收入</li>
+            <li @click="selectType('-')" :class="type === '-' && 'selected'">支出</li>
+            <li @click="selectType('+')" :class="type === '+' && 'selected'">收入</li>
         </ul>
     </div>
 </template>
+
+<script lang="allowJs">
+export default {
+    name: 'Types',
+    data() {
+        return {
+            type: "-" // "-"代表支出，"+"代表收入
+        }
+    },
+    methods: {
+        selectType(type) {
+            if (type !== "-" && type !== "+") {
+                throw new Error('type is an unknown word');
+            } else {
+                this.type = type;
+            }
+        }
+    },
+}
+</script>
+
 
 <style lang="scss" scoped>
 .types {
