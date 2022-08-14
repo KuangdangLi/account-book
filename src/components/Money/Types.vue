@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <ul class="types">
@@ -7,23 +8,21 @@
     </div>
 </template>
 
-<script lang="allowJs">
-export default {
-    name: 'Types',
-    data() {
-        return {
-            type: "-" // "-"代表支出，"+"代表收入
+<script lang="ts">
+import Vue from 'vue';
+import { Component, Prop } from 'vue-property-decorator';
+@Component
+export default class Types extends Vue {
+    type = '-'; // '-'表示支出，'+'表示收入
+
+    @Prop(Number) readonly propA: number | undefined;
+
+    selectType(type: string) {
+        if (type !== '-' && type !== '+') {
+            throw new Error('type is unknown');
         }
-    },
-    methods: {
-        selectType(type) {
-            if (type !== "-" && type !== "+") {
-                throw new Error('type is an unknown word');
-            } else {
-                this.type = type;
-            }
-        }
-    },
+        this.type = type;
+    }
 }
 </script>
 
