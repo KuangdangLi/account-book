@@ -4,7 +4,7 @@
             <NumberPad></NumberPad>
             <Types></Types>
             <Notes></Notes>
-            <Tags></Tags>
+            <Tags :dataSource.sync="tags"></Tags>
 
         </Layout>
     </div>
@@ -19,6 +19,11 @@ import Tags from '../components/Money/Tags.vue';
 
 export default {
     name: "Money",
+    data() {
+        return {
+            tags: ['衣', '食', '住', '行']
+        }
+    },
     components: { Layout, NumberPad, Notes, Types, Tags }
 }
 </script>
