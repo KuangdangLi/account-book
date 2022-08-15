@@ -16,7 +16,7 @@ import { Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue {
-    @Prop(Array) dataSource: string[] | undefined;
+    @Prop(Array) dataSource!: string[];
     selectedTags: string[] = []
     toggle(tag: string) {
         const index = this.selectedTags.indexOf(tag)
@@ -25,7 +25,7 @@ export default class Tags extends Vue {
         } else {
             this.selectedTags.push(tag)
         }
-        console.log(this.selectedTags);
+        this.$emit('update:tags', this.selectedTags)
     }
     create() {
         const name = window.prompt('请输入标签名')
