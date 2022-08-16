@@ -20,33 +20,6 @@
     </div>
 </template>
 
-<!-- <script lang="ts">
-import Vue from "Vue"
-import { Component } from "vue-property-decorator";
-
-@Component
-export default class NumberPad extends Vue {
-    output = '0';
-    inputContent(e: MouseEvent) {
-        const button = e.target as HTMLButtonElement;
-        const input = button.textContent!;
-        if (this.output === '0') {
-            if ('0123456789'.indexOf(input) >= 0) {
-                this.output = input
-            } else {
-                this.output += input
-            }
-        } else if (this.output.indexOf('.') >= 0) return
-        else this.output += input
-    }
-    created() {
-        const li = document.querySelectorAll('div.buttons>button')
-        console.log(li);
-
-    }
-}
-
-</script> -->
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
@@ -84,6 +57,8 @@ export default class NumberPad extends Vue {
     }
     ok() {
         this.$emit('update:value', parseFloat(this.output))
+        this.$emit('submit')
+        this.output = '0'
     }
     mounted() {
         let li = document.querySelectorAll('div.buttons>button')
