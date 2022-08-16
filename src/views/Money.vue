@@ -42,7 +42,7 @@ export default class Money extends Vue {
     }
     dataSave(): void {
         this.record.createdAt = new Date()
-        this.recordList.push(JSON.parse(JSON.stringify(this.record)))//深拷贝
+        this.recordList.push(model.clone(this.record))//深拷贝
     }
     @Watch('recordList')
     onRecordListChange(data: RecordItem[]): void {
