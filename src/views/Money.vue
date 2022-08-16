@@ -19,39 +19,33 @@ import Notes from '../components/Money/Notes.vue';
 import Types from '../components/Money/Types.vue';
 import Tags from '../components/Money/Tags.vue';
 import { Component, Watch } from 'vue-property-decorator';
-const model = require("@/model.js").model
+import model from "@/model"
 
 window.localStorage.setItem('version', '0.0.1')
 
-type Record = {
-    tags: string[]
-    notes: string
-    types: string
-    amount: number
-    createdAt: Date | undefined
-}
+
 
 @Component({
     components: { Layout, NumberPad, Notes, Types, Tags }
 })
 export default class Money extends Vue {
     tags = ['衣', '食', '住', '行']
-    record: Record = {
+    record: RecordItem = {
         tags: [], notes: '', types: '-', amount: 0, createdAt: undefined
     }
-    recordList: Record[] = model.fetch()
-    onUpdateTags(value: string[]) {
+    recordList: RecordItem[] = model.fetch()
+    onUpdateTags(value: string[]): void {
         this.record.tags = value
     }
-    onUpdateNotes(value: string) {
+    onUpdateNotes(value: string): void {
         this.record.notes = value
     }
-    dataSave() {
+    dataSave(): void {
         this.record.createdAt = new Date()
         this.recordList.push(JSON.parse(JSON.stringify(this.record)))//深拷贝
     }
     @Watch('recordList')
-    onRecordListChange(data: Record[]) {
+    onRecordListChange(data: RecordItem[]): void {
         model.save(data)
     }
 }
