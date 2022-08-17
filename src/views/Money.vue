@@ -20,16 +20,17 @@ import Types from '../components/Money/Types.vue';
 import Tags from '../components/Money/Tags.vue';
 import { Component, Watch } from 'vue-property-decorator';
 import recordListModel from "@/models/recordListModel"
+import tagListModel from '@/models/tagListModel';
 
 window.localStorage.setItem('version', '0.0.1')
-
+const tagList = tagListModel.fetch()
 
 
 @Component({
     components: { Layout, NumberPad, FormItem, Types, Tags }
 })
 export default class Money extends Vue {
-    tags = ['衣', '食', '住', '行']
+    tags = tagList
     record: RecordItem = {
         tags: [], notes: '', types: '-', amount: 0, createdAt: undefined
     }
