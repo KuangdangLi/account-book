@@ -19,7 +19,7 @@ import Notes from '../components/Money/Notes.vue';
 import Types from '../components/Money/Types.vue';
 import Tags from '../components/Money/Tags.vue';
 import { Component, Watch } from 'vue-property-decorator';
-import model from "@/model"
+import recordListModel from "@/models/recordListModel"
 
 window.localStorage.setItem('version', '0.0.1')
 
@@ -33,7 +33,7 @@ export default class Money extends Vue {
     record: RecordItem = {
         tags: [], notes: '', types: '-', amount: 0, createdAt: undefined
     }
-    recordList: RecordItem[] = model.fetch()
+    recordList: RecordItem[] = recordListModel.fetch()
     onUpdateTags(value: string[]): void {
         this.record.tags = value
     }
@@ -42,11 +42,11 @@ export default class Money extends Vue {
     }
     dataSave(): void {
         this.record.createdAt = new Date()
-        this.recordList.push(model.clone(this.record))//深拷贝
+        this.recordList.push(recordListModel.clone(this.record))//深拷贝
     }
     @Watch('recordList')
     onRecordListChange(data: RecordItem[]): void {
-        model.save(data)
+        recordListModel.save(data)
     }
 }
 </script>
