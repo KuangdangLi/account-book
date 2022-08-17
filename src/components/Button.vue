@@ -1,5 +1,5 @@
 <template>
-  <button class="createTag" @click="$emit('click',$event)"><slot></slot></button>
+  <button class="button" @click="$emit('click',$event)"><slot></slot></button>
 </template>
 
 <script lang="ts">
@@ -10,8 +10,8 @@ export default class Button extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.createTag {
+<style lang="scss" >
+.button {
   font-family: Source Han Sans;
   font-size: 17px;
   font-weight: 400;

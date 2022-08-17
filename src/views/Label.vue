@@ -6,7 +6,7 @@
                         <Icon name="right"></Icon>
                     </router-link>
             </div>
-            <div class="createTag-wrapper">
+            <div class="button-wrapper">
                 <Button  @click="createTag">新增标签</Button>
             </div>
         </Layout>
