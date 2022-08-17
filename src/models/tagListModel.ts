@@ -1,20 +1,25 @@
 const localStorageKeyName = "tagList";
+interface Tag{
+  id: string
+  name: string
+}
 interface tagListModel {
-  data: string[]
-  fetch: ()=>string[]
+  data: Tag[]
+  fetch: ()=>Tag[]
   create: (name:string)=>void
   save: ()=> void
 }
 const tagListModel ={
-  data:[] as string[],
+  data:[] as Tag[],
   fetch(){
     this.data=JSON.parse(window.localStorage.getItem(localStorageKeyName) || "[]");
     return this.data
   },
   create(name:string){
+    const names = this.data.map(item=>item.name);
     if(name === ''||name === ' ') throw new Error('the label cannot be empty')
-    if(this.data.indexOf(name)>=0) throw new Error('the label already exists')
-    this.data.push(name)
+    if(names.indexOf(name)>=0) throw new Error('the label already exists')
+    this.data.push({id:name,name:name})
     this.save()
   },
   save(){
