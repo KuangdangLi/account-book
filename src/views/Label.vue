@@ -29,7 +29,7 @@ export default class Label extends Vue {
     if (name) {
       try {
         store.createTag(name)
-      } catch (error: Error) {
+      } catch (error) {
         window.alert(`${error.message}`)
       }
     } else {
