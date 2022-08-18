@@ -1,3 +1,5 @@
+import IdGenerator from '@/lib/IdGenerator';
+
 const localStorageKeyName = "tagList";
 interface Tag{
   id: string
@@ -19,7 +21,8 @@ const tagListModel ={
     const names = this.data.map(item=>item.name);
     if(name === ''||name === ' ') throw new Error('the label cannot be empty')
     if(names.indexOf(name)>=0) throw new Error('the label already exists')
-    this.data.push({id:name,name:name})
+    const id = IdGenerator().toString();
+    this.data.push({id:id,name:name})
     this.save()
   },
   save(){
