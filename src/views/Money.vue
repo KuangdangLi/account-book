@@ -2,10 +2,10 @@
     <div>
         {{ recordList }}
         <Layout classPrefix="layout">
-            <NumberPad :value.sync="record.amount" @submit="dataSave"></NumberPad>
+            <NumberPad :value.sync="record.amount" @submit="saveRecord"></NumberPad>
             <Types :value.sync="record.types"></Types>
             <FormItem @update:value="onUpdateNotes" filed-name="备注" place-holder="请输入备注"></FormItem>
-            <Tags :dataSource.sync="tags" @update:tags="onUpdateTags"></Tags>
+            <Tags @update:tags="pushTags"/>
 
         </Layout>
     </div>
@@ -19,36 +19,30 @@ import FormItem from '../components/Money/FormItem.vue';
 import Types from '../components/Money/Types.vue';
 import Tags from '../components/Money/Tags.vue';
 import { Component, Watch } from 'vue-property-decorator';
-import recordListModel from "@/models/recordListModel"
-import tagListModel from '@/models/tagListModel';
+import store from '@/store/store2';
 
 window.localStorage.setItem('version', '0.0.1')
-const tagList = tagListModel.fetch()
 
 
 @Component({
     components: { Layout, NumberPad, FormItem, Types, Tags }
 })
 export default class Money extends Vue {
-    tags = tagList
     record: RecordItem = {
         tags: [], notes: '', types: '-', amount: 0, createdAt: undefined
     }
-    recordList: RecordItem[] = recordListModel.fetch()
-    onUpdateTags(value: string[]): void {
-        this.record.tags = value
-    }
+    recordList: RecordItem[] = store.recordList
+
     onUpdateNotes(value: string): void {
         this.record.notes = value
     }
-    dataSave(): void {
-        this.record.createdAt = new Date()
-        this.recordList.push(recordListModel.clone(this.record))//深拷贝
+    pushTags(tags:string[]){
+      this.record.tags = tags
     }
-    @Watch('recordList')
-    onRecordListChange(data: RecordItem[]): void {
-        recordListModel.save(data)
+    saveRecord(){
+      store.createRecord(this.record)
     }
+
 }
 </script>
 

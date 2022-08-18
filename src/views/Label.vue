@@ -16,18 +16,18 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import Button from '@/components/Button.vue';
+import store from '@/store/store2';
 @Component({
   components: {Button}
 })
 export default class Label extends Vue {
-  tags =tagListModel.fetch()
+  tags = store.tagList
   createTag(){
     const name =window.prompt('请输入标签名')
     if(name) {
       try {
-        tagListModel.create(name)
+        store.createTag(name)
       } catch (error) {
         window.alert(`${error.message}`)
       }

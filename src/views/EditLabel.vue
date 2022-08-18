@@ -19,22 +19,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import tagListModel from '@/models/tagListModel';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
+import store from '@/store/store2';
 @Component({
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
   tag?:{id:string,name:string} = undefined
   update(name:string){
-    console.log('编辑页触发了');
-    if(this.tag) tagListModel.update(this.tag.id,name)
+    if(this.tag) store.updateTag(this.tag.id,name)
   }
   remove(id:string){
     if(this.tag) {
-      if(tagListModel.remove(id)){
+      if(store.removeTag(id)){
         this.$router.replace('/label')
       }
     }
@@ -44,14 +43,9 @@ export default class EditLabel extends Vue {
   }
   created(){
     const id = this.$route.params.id;
-    tagListModel.fetch()
-    const tags= tagListModel.data;
-    const tag = tags.filter(item=>item.id === id)[0]
-    if(tag){
-      this.tag = tag;
-    }else{
-      this.$router.replace('/404')
-    }
+    this.tag =store.findTag(id)
+    if(!this.tag)this.$router.replace('/404')
+
   }
 }
 </script>
