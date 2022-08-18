@@ -1,13 +1,14 @@
 <template>
   <layout>
     <div class="navBar">
-      <Icon name="left" class="leftIcon"></Icon>
+      <Icon name="left" class="leftIcon" @click.native="goBack"></Icon>
       <span class="title">编辑标签</span>
       <span class="rightIcon"></span>
     </div>
-    <form-item filed-name="标签" place-holder="请修改标签"></form-item>
+    <form-item filed-name="标签" place-holder="请修改标签" value="" @update:value="update"></form-item>
     <div class="button-wrapper">
-    <Button>删除标签</Button>
+      {{tag}}
+    <Button @click.native="remove">删除标签</Button>
     </div>
   </layout>
 </template>
@@ -26,14 +27,28 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
-  id:any=[]
+  tag?:{id:string,name:string} = undefined
+  update(name:string){
+    console.log('编辑页触发了');
+    if(this.tag) tagListModel.update(this.tag.id,name)
+  }
+  remove(id:string){
+    if(this.tag) {
+      if(tagListModel.remove(id)){
+        this.$router.replace('/label')
+      }
+    }
+  }
+  goBack(){
+    this.$router.back()
+  }
   created(){
     const id = this.$route.params.id;
     tagListModel.fetch()
     const tags= tagListModel.data;
     const tag = tags.filter(item=>item.id === id)[0]
     if(tag){
-      console.log(tag);
+      this.tag = tag;
     }else{
       this.$router.replace('/404')
     }

@@ -9,6 +9,8 @@ interface tagListModel {
   data: Tag[]
   fetch: ()=>Tag[]
   create: (name:string)=>void
+  update:(id:string,name:string)=> boolean
+  remove:(id:string)=> boolean
   save: ()=> void
 }
 const tagListModel ={
@@ -24,6 +26,28 @@ const tagListModel ={
     const id = IdGenerator().toString();
     this.data.push({id:id,name:name})
     this.save()
+  },
+  update(id:string,name:string) {
+    const IdList = this.data.map(item=>item.id)
+    const index = IdList.indexOf(id)
+    if(index>=0){
+      const NameList = this.data.map(item=>item.name)
+      if(NameList.indexOf(name)>=0){
+        throw new Error('标签名重复')
+      }else{
+        const tag = this.data.filter(item=>item.id===id)[0]
+        tag.name = name;
+        this.save()
+        return true
+      }
+    }
+  },
+  remove(id:string){
+    const IdList = this.data.map(item=>item.id)
+    const index = IdList.indexOf(id)
+    this.data.splice(index,1)
+    this.save()
+    return true
   },
   save(){
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
