@@ -18,17 +18,22 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
-import store from '@/store/store2';
+// import store from '@/store/store2';
 @Component({
   components: { Button }
 })
 export default class Label extends Vue {
-  tags = store.tagList
+  get tags(){
+    return this.$store.state.tagList
+  }
+  created(){
+    this.$store.commit('fetchTags')
+  }
   createTag(): void {
     const name = window.prompt('请输入标签名')
     if (name) {
       try {
-        store.createTag(name)
+        this.$store.commit('createTag',name)
       } catch (error) {
         window.alert(`${error.message}`)
       }
@@ -59,22 +64,4 @@ export default class Label extends Vue {
   }
 }
 
-//.createTag {
-//    font-family: Source Han Sans;
-//    font-size: 17px;
-//    font-weight: 400;
-//    line-height: 22px;
-//    letter-spacing: -0.4099999964237213px;
-//    text-align: left;
-//    color: #fff;
-//    padding: 9px 15px 9px 16px;
-//    background-color: #767676;
-//    border: none;
-//    border-radius: 4px;
-//
-//    &-wrapper {
-//        text-align: center;
-//        padding-top: 44px;
-//    }
-//}
 </style>

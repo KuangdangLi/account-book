@@ -22,28 +22,31 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/Money/FormItem.vue';
 import Button from '@/components/Button.vue';
-import store from '@/store/store2';
+// import store from '@/store/store2';
 @Component({
   components: {Button, FormItem}
 })
 export default class EditLabel extends Vue {
   tag?:{id:string,name:string} = undefined
   update(name:string){
-    if(this.tag) store.updateTag(this.tag.id,name)
+    const id = this.tag!.id
+    if(this.tag) this.$store.commit('updateTag',{id, name})
   }
   remove(id:string){
     if(this.tag) {
-      if(store.removeTag(id)){
+        this.$store.commit('removeTag',id)
         this.$router.replace('/label')
-      }
+
     }
   }
   goBack(){
     this.$router.back()
   }
   created(){
+    this.$store.commit('fetchTags')
     const id = this.$route.params.id;
-    this.tag =store.findTag(id)
+    this.$store.commit('setCurrentTag', id);
+    this.tag = this.$store.state.currentTag
     if(!this.tag)this.$router.replace('/404')
 
   }

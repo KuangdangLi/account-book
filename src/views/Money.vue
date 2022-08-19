@@ -19,7 +19,7 @@ import FormItem from '../components/Money/FormItem.vue';
 import Types from '../components/Money/Types.vue';
 import Tags from '../components/Money/Tags.vue';
 import { Component, Watch } from 'vue-property-decorator';
-import store from '@/store/store2';
+// import store from '@/store/store2';
 
 window.localStorage.setItem('version', '0.0.1')
 
@@ -31,8 +31,12 @@ export default class Money extends Vue {
     record: RecordItem = {
         tags: [], notes: '', types: '-', amount: 0, createdAt: undefined
     }
-    recordList: RecordItem[] = store.recordList
-
+    get recordList(){
+      return this.$store.state.recordList
+    }
+    created(){
+      this.$store.commit("fetchRecord")
+    }
     onUpdateNotes(value: string): void {
         this.record.notes = value
     }
@@ -40,7 +44,7 @@ export default class Money extends Vue {
       this.record.tags = tags
     }
     saveRecord(){
-      store.createRecord(this.record)
+      this.$store.commit('createRecord',this.record)
     }
 
 }
