@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <ul class="types">
+        <ul class="types" :class="{[classPrefix+'tabs']:classPrefix}">
             <li v-for="item in dataSource" :key="item.value" @click="selectType(item)" :class="liClass(item)">
               {{item.text}}
             </li>
