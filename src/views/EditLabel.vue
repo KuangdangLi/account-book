@@ -53,8 +53,8 @@ export default class EditLabel extends Vue {
 }
 </script>
 
-<style lang="scss" >
-  .navBar{
+<style lang="scss" scoped>
+  ::v-deep.navBar{
     display: flex;
     flex-direction: row;
     height: 48px;

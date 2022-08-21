@@ -75,7 +75,7 @@ export default class NumberPad extends Vue {
 
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
 @import "~@/assets/style/helper.scss";
 

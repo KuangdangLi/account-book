@@ -44,8 +44,8 @@ export default class Label extends Vue {
 }
 </script>
 
-<style lang="scss">
-.tags {
+<style lang="scss" scoped>
+::v-deep.tags {
 
   padding-left: 15px;
 
