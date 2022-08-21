@@ -2,8 +2,9 @@
 <template>
     <div>
         <ul class="types">
-            <li @click="selectType('-')" :class="value === '-' && 'selected'">支出</li>
-            <li @click="selectType('+')" :class="value === '+' && 'selected'">收入</li>
+            <li v-for="item in dataSource" :key="item.value" @click="selectType(item)" :class="liClass(item)">
+              {{item.text}}
+            </li>
         </ul>
     </div>
 </template>
@@ -11,15 +12,21 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component, Prop } from 'vue-property-decorator';
+type DataSourceItem = {text:string,value:string}
 @Component
 export default class Types extends Vue {
-    @Prop({ default: '-' }) readonly value!: string;
 
-    selectType(type: string) {
-        if (type !== '-' && type !== '+') {
-            throw new Error('type is unknown');
+    @Prop() readonly value!: string;
+    @Prop() readonly  dataSource!:DataSourceItem[]
+    @Prop() readonly classPrefix!:string
+    selectType(item:DataSourceItem) {
+        this.$emit('update:value', item.value);
+    }
+    liClass(item:DataSourceItem){
+        return{
+          selected: item.value === this.value,
+          [this.classPrefix + '-tabs-item']: this.classPrefix
         }
-        this.$emit('update:value', type);
     }
 }
 </script>
